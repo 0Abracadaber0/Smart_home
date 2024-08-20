@@ -3,6 +3,7 @@ package handler
 import (
 	"main/config"
 	model "main/internal/models"
+	request "main/internal/requests"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
@@ -32,7 +33,7 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	case "settings":
 		switch update.Message.Text {
 		case "Перезапуск шлюза":
-			msg.Text = "Это ребут шлюза!"
+			msg.Text = request.RebootGateway()
 		case "Помощь":
 			msg.Text = "Это помощь!"
 		case "Админ":
