@@ -20,6 +20,16 @@ var SettingsKeyboard = tgbotapi.NewReplyKeyboard(
 	),
 	tgbotapi.NewKeyboardButtonRow(
 		tgbotapi.NewKeyboardButton("Админ"),
-		tgbotapi.NewKeyboardButton("Вернуться в главное меню"),
+		tgbotapi.NewKeyboardButton("Вернуться назад"),
+	),
+)
+
+var AdminKeyboard = tgbotapi.NewReplyKeyboard(
+	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.NewKeyboardButton("Список всех устройств"),
+		tgbotapi.NewKeyboardButton("Изменить данные устройства"),
+	),
+	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.NewKeyboardButton("Вернуться назад"),
 	),
 )

@@ -5,7 +5,10 @@ type Device struct {
 	IeeeAddr      string `json:"ieeeAddr"`
 	Flags         int32  `json:"flags"`
 	Friendly_name string `json:"friendly_name"`
-	State         St     `json:"st"`
+	Name          string
+	Location      string
+	Type          string
+	State         St `json:"st"`
 }
 
 type St struct {

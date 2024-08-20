@@ -12,7 +12,7 @@ var currentMenu = "main"
 func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	log := config.SetupLogger(config.Config("ENV"))
 
-	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
+	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "У разраба кривые руки")
 	switch currentMenu {
 	case "main":
 		switch update.Message.Text {
@@ -25,6 +25,7 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		case "Настройки":
 			currentMenu = "settings"
 			KeyboardHandler(bot, update, model.SettingsKeyboard)
+			return
 		default:
 			msg.Text = "Не знаю такого("
 		}
@@ -35,10 +36,26 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		case "Помощь":
 			msg.Text = "Это помощь!"
 		case "Админ":
-			msg.Text = "Это админ панель!"
-		case "Вернуться в главное меню":
+			currentMenu = "admin"
+			KeyboardHandler(bot, update, model.AdminKeyboard)
+			return
+		case "Вернуться назад":
 			currentMenu = "main"
 			KeyboardHandler(bot, update, model.MainMenuKeyboard)
+			return
+		default:
+			msg.Text = "Не знаю такого("
+		}
+	case "admin":
+		switch update.Message.Text {
+		case "Список всех устройств":
+			msg.Text = "В разработке!"
+		case "Изменить данные устройства":
+			msg.Text = "Это изменение данных устройства!"
+		case "Вернуться назад":
+			currentMenu = "settings"
+			KeyboardHandler(bot, update, model.SettingsKeyboard)
+			return
 		default:
 			msg.Text = "Не знаю такого("
 		}
