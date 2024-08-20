@@ -12,3 +12,14 @@ var MainMenuKeyboard = tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButton("Настройки"),
 	),
 )
+
+var SettingsKeyboard = tgbotapi.NewReplyKeyboard(
+	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.NewKeyboardButton("Перезапуск шлюза"),
+		tgbotapi.NewKeyboardButton("Помощь"),
+	),
+	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.NewKeyboardButton("Админ"),
+		tgbotapi.NewKeyboardButton("Вернуться в главное меню"),
+	),
+)
