@@ -15,11 +15,10 @@ var MainMenuKeyboard = tgbotapi.NewReplyKeyboard(
 
 var SettingsKeyboard = tgbotapi.NewReplyKeyboard(
 	tgbotapi.NewKeyboardButtonRow(
-		tgbotapi.NewKeyboardButton("Перезапуск шлюза"),
 		tgbotapi.NewKeyboardButton("Помощь"),
+		tgbotapi.NewKeyboardButton("Админ"),
 	),
 	tgbotapi.NewKeyboardButtonRow(
-		tgbotapi.NewKeyboardButton("Админ"),
 		tgbotapi.NewKeyboardButton("Вернуться назад"),
 	),
 )
@@ -30,6 +29,7 @@ var AdminKeyboard = tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButton("Изменить данные устройства"),
 	),
 	tgbotapi.NewKeyboardButtonRow(
+		tgbotapi.NewKeyboardButton("Перезапуск шлюза"),
 		tgbotapi.NewKeyboardButton("Вернуться назад"),
 	),
 )

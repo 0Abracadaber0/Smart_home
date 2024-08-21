@@ -62,6 +62,7 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update, botState *mod
 		}
 	}
 
+	msg.ParseMode = tgbotapi.ModeMarkdownV2
 	if _, err := bot.Send(msg); err != nil {
 		log.Error("Error sending the message", "Err", err)
 	}
