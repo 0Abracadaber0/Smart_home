@@ -3,14 +3,16 @@ package request
 import (
 	"encoding/json"
 	"main/config"
+	model "main/internal/models"
 
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/gofiber/fiber/v2"
 )
 
-func RebootGateway() string {
+func GetAllDevices() []model.Device {
 	log := config.SetupLogger(config.Config("ENV"))
 
-	url := config.Config("URL") + "/api/reboot"
+	url := config.Config("URL") + "/api/zigbee/devices"
 
 	a := fiber.AcquireAgent()
 	req := a.Request()
@@ -26,16 +28,26 @@ func RebootGateway() string {
 		log.Error("Oops!", "err", err)
 	}
 
-	var response fiber.Map
-	errs := json.Unmarshal(body, &response)
+	var devices []model.Device
+	errs := json.Unmarshal(body, &devices)
 	if errs != nil {
 		log.Error("Oops!", "errs", errs)
 	}
 
-	if response["success"].(bool) {
-		return "Шлюз успешно перезапущен!"
-	} else {
-		return "Ошибка при перезапуске шлюза!"
+	return devices
+}
+
+func PrintAllDevices() string {
+	devices := GetAllDevices()
+
+	var msg string
+	for _, device := range devices {
+		msg += device.String()
 	}
+
+	return msg
+}
+
+func ChangeDeviceData(bot *tgbotapi.BotAPI) {
 
 }

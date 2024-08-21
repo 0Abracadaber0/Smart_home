@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 type Device struct {
 	NwkAddr       string `json:"nwkAddr"`
 	IeeeAddr      string `json:"ieeeAddr"`
@@ -17,5 +19,13 @@ type St struct {
 	Battery     int     `json:"battery"`
 	Gas         string  `json:"gas"`
 	Temperature float32 `json:"temperature"`
-	Contact     string  `json:"contact"`
+	Contact     bool    `json:"contact"`
+}
+
+func (device Device) String() string {
+	return fmt.Sprintf(
+		"Device:\n FriendlyName: *%s*\n NwkAddr: %s\n\n",
+		device.Friendly_name,
+		device.NwkAddr,
+	)
 }

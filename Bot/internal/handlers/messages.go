@@ -8,7 +8,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
-var currentMenu = "main"
+var CurrentMenu = "main"
 
 func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	log := config.SetupLogger(config.Config("ENV"))
@@ -30,6 +30,7 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		default:
 			msg.Text = "Не знаю такого("
 		}
+
 	case "settings":
 		switch update.Message.Text {
 		case "Перезапуск шлюза":
@@ -47,12 +48,13 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		default:
 			msg.Text = "Не знаю такого("
 		}
+
 	case "admin":
 		switch update.Message.Text {
 		case "Список всех устройств":
-			msg.Text = "В разработке!"
+			msg.Text = request.PrintAllDevices()
 		case "Изменить данные устройства":
-			msg.Text = "Это изменение данных устройства!"
+			request.ChangeDeviceData(bot)
 		case "Вернуться назад":
 			currentMenu = "settings"
 			KeyboardHandler(bot, update, model.SettingsKeyboard)
