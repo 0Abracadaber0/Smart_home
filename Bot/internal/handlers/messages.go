@@ -8,13 +8,11 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
-var CurrentMenu = "main"
-
-func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
+func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update, botState *model.BotState) {
 	log := config.SetupLogger(config.Config("ENV"))
 
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "У разраба кривые руки")
-	switch currentMenu {
+	switch botState.CurrentMenu {
 	case "main":
 		switch update.Message.Text {
 		case "Температура":
@@ -24,7 +22,7 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		case "Безопасность":
 			msg.Text = "Это безопасность!"
 		case "Настройки":
-			currentMenu = "settings"
+			botState.CurrentMenu = "settings"
 			KeyboardHandler(bot, update, model.SettingsKeyboard)
 			return
 		default:
@@ -38,11 +36,11 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		case "Помощь":
 			msg.Text = "Это помощь!"
 		case "Админ":
-			currentMenu = "admin"
+			botState.CurrentMenu = "admin"
 			KeyboardHandler(bot, update, model.AdminKeyboard)
 			return
 		case "Вернуться назад":
-			currentMenu = "main"
+			botState.CurrentMenu = "main"
 			KeyboardHandler(bot, update, model.MainMenuKeyboard)
 			return
 		default:
@@ -56,7 +54,7 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		case "Изменить данные устройства":
 			request.ChangeDeviceData(bot)
 		case "Вернуться назад":
-			currentMenu = "settings"
+			botState.CurrentMenu = "settings"
 			KeyboardHandler(bot, update, model.SettingsKeyboard)
 			return
 		default:

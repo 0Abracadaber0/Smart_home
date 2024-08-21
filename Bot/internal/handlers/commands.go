@@ -7,11 +7,12 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
-func CommandsHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
+func CommandsHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update, botState *model.BotState) {
 	log := config.SetupLogger(config.Config("ENV"))
 
 	switch update.Message.Command() {
 	case "menu":
+		botState.CurrentMenu = "main"
 		KeyboardHandler(bot, update, model.MainMenuKeyboard)
 	default:
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Не знаю такого(")

@@ -2,6 +2,7 @@ package receiver
 
 import (
 	handler "main/internal/handlers"
+	model "main/internal/models"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
@@ -12,15 +13,17 @@ func Receive(bot *tgbotapi.BotAPI) {
 
 	updates := bot.GetUpdatesChan(u)
 
+	botState := model.BotState{CurrentMenu: "main"}
+
 	for update := range updates {
 		if update.Message == nil { // ignore non-Message updates
 			continue
 		}
 
 		if update.Message.IsCommand() {
-			handler.CommandsHandler(bot, update)
+			handler.CommandsHandler(bot, update, &botState)
 		} else {
-			handler.MessagesHandler(bot, update)
+			handler.MessagesHandler(bot, update, &botState)
 		}
 	}
 }
