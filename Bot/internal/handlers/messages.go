@@ -51,8 +51,9 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update, botState *mod
 		switch update.Message.Text {
 		case "Список всех устройств":
 			msg.Text = request.PrintAllDevices()
+			msg.ParseMode = tgbotapi.ModeMarkdownV2
 		case "Изменить данные устройства":
-			request.ChangeDeviceData(bot)
+			msg.Text = request.ChangeDeviceData(bot, update)
 		case "Вернуться назад":
 			botState.CurrentMenu = "settings"
 			KeyboardHandler(bot, update, model.SettingsKeyboard)
@@ -62,7 +63,6 @@ func MessagesHandler(bot *tgbotapi.BotAPI, update tgbotapi.Update, botState *mod
 		}
 	}
 
-	msg.ParseMode = tgbotapi.ModeMarkdownV2
 	if _, err := bot.Send(msg); err != nil {
 		log.Error("Error sending the message", "Err", err)
 	}
